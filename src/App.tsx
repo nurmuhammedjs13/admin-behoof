@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
 function App() {
-  return (
-    <div>App</div>
-  )
+    return (
+        <>
+            <div className="add_product">
+                <div className="container">
+                    <div className="add_product_content"></div>
+                </div>
+            </div>
+        </>
+    );
 }
 
-export default App
+export default App;
