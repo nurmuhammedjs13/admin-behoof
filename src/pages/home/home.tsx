@@ -1,13 +1,11 @@
-import Footer from "../../components/footer/footer"
-import Header from "../../components/header/header"
-import Authorization from '../../components/authorization/authorization'
+import Authorization from "../../components/authorization/authorization";
 
 function Home() {
-  return <>
-    <Header/>
-    <Authorization/>
-    <Footer/>
-  </>
+    return (
+        <>
+            <Authorization />
+        </>
+    );
 }
 
-export default Home
+export default Home;
