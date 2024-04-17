@@ -1,6 +1,7 @@
 .comeIn__cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    align-items: center;
+    flex-direction: row;gap: 30px;
 }
 .Authorization_content{
     display: flex;
@@ -8,6 +9,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .comeIn__cards__card {
     display: flex;
     flex-direction: column;
@@ -24,6 +26,7 @@
 .comeIn__cards__card__title-input {
     width: 500px;
     height: 30px;
+    font-size: 20px;
     border-radius: 5px;
     margin: 7px 0;
     background: whitesmoke;

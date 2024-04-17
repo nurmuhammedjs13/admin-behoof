@@ -9,7 +9,6 @@ function Authorization() {
                     <div className="Authorization_content">
                         <div className="comeIn">
                             <div className="comeIn__cards">
-                                .comeIn__cards
                                 <div className="comeIn__cards__card">
                                     <h3 className="comeIn__cards__card-logo">
                                         Authorization
@@ -24,10 +23,16 @@ function Authorization() {
                                     </div>
 
                                     <div className="comeIn__cards__card__icons">
-                                        <Link to={'/AddProduct'} className="comeIn__cards__card__icons-but2">
+                                        <Link
+                                            to={"/AddProduct"}
+                                            className="comeIn__cards__card__icons-but2"
+                                        >
                                             Sign in ➩
                                         </Link>
-                                    </div> 
+                                    </div>
+                                </div>
+                                <div className="comeIn__cards_rule">
+                                    <h1 className="comeIn__cards_rule-text">≺ НАПИШИТЕ ПАРОЛЬ</h1>
                                 </div>
                             </div>
                         </div>
