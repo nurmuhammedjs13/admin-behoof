@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./authorization.css";
 
 function Authorization() {
+<<<<<<< HEAD
   return (
     <>
       <div className="Authorization">
@@ -11,6 +12,19 @@ function Authorization() {
               <div className="comeIn__cards">
                 <div className="comeIn__cards__card">
                   <h3 className="comeIn__cards__card-logo">Authorization</h3>
+=======
+    return (
+        <>
+            <div className="Authorization">
+                <div className="container">
+                    <div className="Authorization_content">
+                        <div className="comeIn">
+                            <div className="comeIn__cards">
+                                <div className="comeIn__cards__card">
+                                    <h3 className="comeIn__cards__card-logo">
+                                        Authorization
+                                    </h3>
+>>>>>>> b75828750f7cfec641506e55e5aabf50c0fe042e
 
                   <div className="comeIn__cards__card__title">
                     <p className="comeIn__cards__card__title-text">Password</p>
@@ -18,6 +32,7 @@ function Authorization() {
                     <hr className="comeIn__cards__card__title-hr" />
                   </div>
 
+<<<<<<< HEAD
                   <div className="comeIn__cards__card__icons">
                     <Link
                       to={"/AddProduct"}
@@ -26,6 +41,23 @@ function Authorization() {
                       Sign in ➩
                     </Link>
                   </div>
+=======
+                                    <div className="comeIn__cards__card__icons">
+                                        <Link
+                                            to={"/AddProduct"}
+                                            className="comeIn__cards__card__icons-but2"
+                                        >
+                                            Sign in ➩
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="comeIn__cards_rule">
+                                    <h1 className="comeIn__cards_rule-text">≺ НАПИШИТЕ ПАРОЛЬ</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+>>>>>>> b75828750f7cfec641506e55e5aabf50c0fe042e
                 </div>
               </div>
             </div>
