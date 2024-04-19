@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import DropDownColor from "../../components/DropDown-color/DropDown-color";
 import DropDownStorage from "../../components/DropDown-storage/DropDown-storage";
 import DropDownType from "../../components/DropDown-type/DropDown-type";
