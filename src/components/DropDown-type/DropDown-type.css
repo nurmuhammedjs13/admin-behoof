@@ -1,0 +1,39 @@
+.dropdown-hidden-type {
+display: flex;
+    position: absolute;
+    visibility: hidden;
+}
+.dropdown-visible-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    visibility: visible;
+}
+
+.DropDown-wrap-type{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.data-type{
+    height: 24px;
+    padding: 0 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    border: 1px solid black;
+    color: black;
+    background: azure;
+}
+
+.DropDown-wrap-button-type{
+    height: 24px;
+    padding: 0 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    border: 1px solid black;
+    color: black;
+    background: azure;
+}
