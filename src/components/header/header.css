@@ -40,7 +40,7 @@
   border: none;
   background: #f2f5f9;
   padding: 0 0 0 10px;
-  border-radius: 10px;
+  border-radius: 0 10px 10px 0;
   width: 576px;
   height: 40px;
   transition:  0.5s;

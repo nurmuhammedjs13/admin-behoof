@@ -4,8 +4,60 @@ import DropDownType from "../../components/DropDown-type/DropDown-type";
 import "./addProduct.css";
 import Header from "../../components/header/header";
 import Product from "../../components/product_content/product_content";
+import { useMemo, useState } from "react";
 
 function AddProduct() {
+    const options = useMemo(
+        () => ({
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+        }),
+        []
+    );
+    const [currentDate] = useState(
+        new Date().toLocaleDateString("ru-RU", options)
+    );
+
+    const [data, setData] = useState({
+        img: "",
+        type: "",
+        model: "",
+        price: "",
+        storage: "",
+        color: "",
+        description: "",
+        battery: "",
+        display: "",
+        camera: "",
+        answer: "",
+        design: "",
+        portabl: "",
+    });
+
+    function addInfoHandler(key: string, value: string) {
+        if (key in data) {
+            setData((prevData) => ({
+                ...prevData,
+                [key]: value,
+            }));
+        }
+        console.log(data);
+    }
+
+    function addProduct() {
+        const newData = {
+            ...data,
+
+            date: currentDate,
+        };
+        setData(newData);
+        console.log(newData);
+    }
+
     return (
         <>
             <Header />
@@ -23,11 +75,20 @@ function AddProduct() {
                                     </h1>
                                     <div className="add_product_content_inf_inputs_adding">
                                         <input
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "img",
+                                                    e.target.value
+                                                )
+                                            }
                                             placeholder="URL"
                                             className="add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={addInfoHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -51,10 +112,13 @@ function AddProduct() {
                                             ]}
                                             defaultType="тип товара"
                                             onSelect={(value) =>
-                                                console.log(value)
+                                                addInfoHandler("type", value)
                                             }
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={addInfoHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -66,10 +130,19 @@ function AddProduct() {
                                     </h1>
                                     <div className="add_product_content_inf_inputs_adding">
                                         <input
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "model",
+                                                    e.target.value
+                                                )
+                                            }
                                             className="add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={addInfoHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -81,10 +154,24 @@ function AddProduct() {
                                     </h1>
                                     <div className="add_product_content_inf_inputs_adding">
                                         <input
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "price",
+                                                    e.target.value
+                                                )
+                                            }
                                             className="add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={() =>
+                                                addInfoHandler(
+                                                    "img",
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -107,10 +194,13 @@ function AddProduct() {
                                             ]}
                                             defaultStorage="накопитель"
                                             onSelect={(value) =>
-                                                console.log(value)
+                                                addInfoHandler("storage", value)
                                             }
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={addInfoHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -131,10 +221,13 @@ function AddProduct() {
                                             ]}
                                             defaultColor="цвет"
                                             onSelect={(value) =>
-                                                console.log(value)
+                                                addInfoHandler("color", value)
                                             }
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={addInfoHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -146,10 +239,19 @@ function AddProduct() {
                                     </h1>
                                     <div className="add_product_content_inf_inputs_adding">
                                         <input
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "description",
+                                                    e.target.value
+                                                )
+                                            }
                                             className="add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button className="add_product_content_inf_inputs-button">
+                                        <button
+                                            onClick={addInfoHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
                                             добавить
                                         </button>
                                     </div>
@@ -162,10 +264,19 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "battery",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 className="add_product_content_inf_inputs-input"
                                                 type="text"
                                             />
-                                            <button className="add_product_content_inf_inputs-button">
+                                            <button
+                                                onClick={addInfoHandler}
+                                                className="add_product_content_inf_inputs-button"
+                                            >
                                                 добавить
                                             </button>
                                         </div>
@@ -176,10 +287,19 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "display",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 className="add_product_content_inf_inputs-input"
                                                 type="text"
                                             />
-                                            <button className="add_product_content_inf_inputs-button">
+                                            <button
+                                                onClick={addInfoHandler}
+                                                className="add_product_content_inf_inputs-button"
+                                            >
                                                 добавить
                                             </button>
                                         </div>
@@ -190,10 +310,19 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "camera",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 className="add_product_content_inf_inputs-input"
                                                 type="text"
                                             />
-                                            <button className="add_product_content_inf_inputs-button">
+                                            <button
+                                                onClick={addInfoHandler}
+                                                className="add_product_content_inf_inputs-button"
+                                            >
                                                 добавить
                                             </button>
                                         </div>
@@ -205,10 +334,19 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "answer",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 className="add_product_content_inf_inputs-input"
                                                 type="text"
                                             />
-                                            <button className="add_product_content_inf_inputs-button">
+                                            <button
+                                                onClick={addInfoHandler}
+                                                className="add_product_content_inf_inputs-button"
+                                            >
                                                 добавить
                                             </button>
                                         </div>
@@ -219,10 +357,19 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "design",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 className="add_product_content_inf_inputs-input"
                                                 type="text"
                                             />
-                                            <button className="add_product_content_inf_inputs-button">
+                                            <button
+                                                onClick={addInfoHandler}
+                                                className="add_product_content_inf_inputs-button"
+                                            >
                                                 добавить
                                             </button>
                                         </div>
@@ -234,17 +381,29 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "portabl",
+                                                        e.target.value
+                                                    )
+                                                }
                                                 className="add_product_content_inf_inputs-input"
                                                 type="text"
                                             />
-                                            <button className="add_product_content_inf_inputs-button">
+                                            <button
+                                                onClick={addInfoHandler}
+                                                className="add_product_content_inf_inputs-button"
+                                            >
                                                 добавить
                                             </button>
                                         </div>
                                     </div>
                                     <hr />
                                 </div>
-                                <button className="add_product_content_inf-add-button">
+                                <button
+                                    onClick={addProduct}
+                                    className="add_product_content_inf-add-button"
+                                >
                                     отправить
                                 </button>
                             </div>
