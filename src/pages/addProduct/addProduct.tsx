@@ -1,6 +1,7 @@
 import DropDownColor from "../../components/DropDown-color/DropDown-color";
-import DropDownStorage from "../../components/DropDown-storage/DropDown-storage";
 import DropDownType from "../../components/DropDown-type/DropDown-type";
+import DropDownStorage from "../../components/DropDown-storage/DropDown-storage";
+
 import "./addProduct.css";
 import { v4 as uuidv4 } from "uuid";
 import Header from "../../components/header/header";
