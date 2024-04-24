@@ -67,6 +67,9 @@
     color: black;
     background: azure;
 }
+.comeIn__cards__card__icons-button:hover {
+    background: rgb(199, 255, 255);
+}
 
 .comeIn-img {
     max-width: 300px;
@@ -135,12 +138,12 @@
         gap: 0px;
     }
 
-    .comeIn__cards_rule_true{
+    .comeIn__cards_rule_true {
         margin-top: 10px;
     }
 }
 @media screen and (max-width: 375px) {
-    .comeIn__cards__card__title-input{
-width:220px;
+    .comeIn__cards__card__title-input {
+        width: 220px;
     }
 }

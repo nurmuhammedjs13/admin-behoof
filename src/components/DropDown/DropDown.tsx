@@ -1,4 +1,4 @@
-import "./DropDown.css";
+import "./DropDown-header.css";
 import { useState } from "react";
 
 interface Props {
@@ -9,19 +9,25 @@ interface Props {
 
 //asd
 
-const DropDown: React.FC<Props> = () => {
+const Dropdown_header: React.FC<Props> = () => {
     const [toShow, setToShow] = useState(true);
     function toShows() {
         setToShow(!toShow);
     }
 
     return (
-        <div className="DropDown-wrap">
-            <button className="dropdown-defaultValue" onClick={toShows}>
+        <div className="dropdown-header-wrap">
+            <button className="dropdown-header-defaultValue" onClick={toShows}>
                 {"Сортировка"}
             </button>
 
-            <div className={toShow ? "dropdown-hidden" : "dropdown-visible"}>
+            <div
+                className={
+                    toShow
+                        ? "dropdown-header-hidden"
+                        : "dropdown-header-visible"
+                }
+            >
                 <button onClick={toShows} className="categories_content">
                     <div className="categories_content_info">
                         <div className="categories_content_info-title">
@@ -65,4 +71,4 @@ const DropDown: React.FC<Props> = () => {
     );
 };
 
-export default DropDown;
+export default Dropdown_header;
