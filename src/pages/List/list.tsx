@@ -1,11 +1,11 @@
 import { get, getDatabase, ref } from "firebase/database";
 import Header from "../../components/header/header";
 import "./list.css";
+import { useState } from "react";
 // import { useState } from "react";
 
 function List() {
-
-    // const [productsDB, setProductsDB] = useState([])
+    const [productsDB, setProductsDB] = useState();
 
     function getproduct() {
         const db = getDatabase();
@@ -14,8 +14,8 @@ function List() {
         get(productRef)
             .then((snapshot) => {
                 if (snapshot.exists()) {
+                    setProductsDB(Object(snapshot.val()));
                     console.log(Object(snapshot.val()));
-                    
                 } else {
                     console.log("No data available");
                 }
@@ -32,6 +32,7 @@ function List() {
                 <div className="container">
                     <div className="List__content">
                         <button onClick={getproduct}>обновить</button>
+                        {productsDB}
                     </div>
                 </div>
             </div>

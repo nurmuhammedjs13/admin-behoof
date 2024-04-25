@@ -1,34 +1,32 @@
-import DropDownColor from "../../components/DropDown-color/DropDown-color";
+import DropDownColor from "../../components/DropDownSelection/DropDown-selection";
 import DropDownType from "../../components/DropDown-type/DropDown-type";
-import DropDownStorage from "../../components/DropDown-storage/DropDown-storage";
-
 import "./addProduct.css";
 import { v4 as uuidv4 } from "uuid";
 import Header from "../../components/header/header";
 import { useMemo, useState } from "react";
 import { DateTimeFormatOptions } from "intl";
-import { getDatabase, push, set, ref } from "firebase/database";
+import { getDatabase, set, ref } from "firebase/database";
 
 function AddProduct() {
     const id = uuidv4();
 
-   const [marks] = useState<{
-       battery: number;
-       display: number;
-       camera: number;
-       answer: number;
-       design: number;
-       portabl: number;
-   }>({
-       battery: 0,
-       display: 0,
-       camera: 0,
-       answer: 0,
-       design: 0,
-       portabl: 0,
-   });
+    const [marks] = useState<{
+        battery: number;
+        display: number;
+        camera: number;
+        answer: number;
+        design: number;
+        portabl: number;
+    }>({
+        battery: 0,
+        display: 0,
+        camera: 0,
+        answer: 0,
+        design: 0,
+        portabl: 0,
+    });
 
-    const [detail, ] = useState({
+    const [detail, setDetail] = useState({
         key: "",
         value: "",
     });
@@ -70,6 +68,10 @@ function AddProduct() {
 
     function addInfoHandler(key: string, value: string) {
         setData((prevData) => ({
+            ...prevData,
+            [key]: value,
+        }));
+        setDetail((prevData) => ({
             ...prevData,
             [key]: value,
         }));
@@ -132,6 +134,7 @@ function AddProduct() {
                                             <h1 className="info_text">
                                                 {data.model}
                                             </h1>
+
                                             <div className="product_content__subjest_info-items">
                                                 <div className="info_item">
                                                     {detail.key} :
@@ -281,7 +284,7 @@ function AddProduct() {
                                                 Тип: {data.type}
                                             </div>
                                             <div className="product_content_price_storage_div product_content_price_storage_div_active">
-                                                Дата добавления: {}
+                                                Дата добавления: {data.date}
                                             </div>
                                         </div>
                                     </div>
@@ -422,7 +425,7 @@ function AddProduct() {
                                         накопитель{" "}
                                     </h1>
                                     <div className="add_product_content_inf_inputs_adding-storage">
-                                        <DropDownStorage
+                                        <DropDownColor
                                             data={[
                                                 "16гб",
                                                 "32гб",
@@ -432,7 +435,7 @@ function AddProduct() {
                                                 "512гб",
                                                 "1тб",
                                             ]}
-                                            defaultStorage={
+                                            defaultColor={
                                                 !data.storage
                                                     ? "накопитель"
                                                     : data.storage
