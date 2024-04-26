@@ -1,5 +1,4 @@
 import headerLogo from "../../assets/header-logo.png";
-import DropDown from "../DropDown/DropDown";
 import "./header.css";
 
 import { Link } from "react-router-dom";
@@ -24,18 +23,7 @@ function Header() {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="header_center_info_search_content">
-                                <DropDown
-                                    data={[]}
-                                    defaultValue="Категория товаров ↓"
-                                    onSelect={(value) => console.log(value)}
-                                />
-                                <input
-                                    placeholder="Поиск товаров"
-                                    type="text"
-                                    className="header_center_info_search_content-input"
-                                />
-                            </div>
+                           
                             <div className="header_nav">
                                 <Link
                                     to={"/AddProduct"}

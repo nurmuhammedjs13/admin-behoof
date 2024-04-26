@@ -10,6 +10,12 @@ import { getDatabase, set, ref } from "firebase/database";
 function AddProduct() {
     const id = uuidv4();
 
+    const [detail, setDetail] = useState({
+        key: "",
+        value: "",
+    });
+    const [details, setDetails] = useState([]);
+
     const [marks] = useState<{
         battery: number;
         display: number;
@@ -26,10 +32,6 @@ function AddProduct() {
         portabl: 0,
     });
 
-    const [detail, setDetail] = useState({
-        key: "",
-        value: "",
-    });
     const options = useMemo(
         () => ({
             year: "numeric",
@@ -50,9 +52,6 @@ function AddProduct() {
         [options]
     );
 
-    const [currentDate] = useState(
-        new Date().toLocaleDateString("ru-RU", intlOptions)
-    );
     const [data, setData] = useState({
         img: "",
         type: "",
@@ -64,6 +63,7 @@ function AddProduct() {
         date: "",
         id: "",
         ...marks,
+        ...detail,
     });
 
     function addInfoHandler(key: string, value: string) {
@@ -77,10 +77,14 @@ function AddProduct() {
         }));
     }
 
+    function addInputs() {
+        
+    }
+
     function addProductHandler() {
         const newData = {
             ...data,
-            date: currentDate,
+            date: new Date().toLocaleDateString("ru-RU", intlOptions),
             id,
         };
         setData(newData);
@@ -109,6 +113,7 @@ function AddProduct() {
             portabl: 0,
             camera: 0,
             design: 0,
+            date: "",
         }));
     }
 
@@ -136,10 +141,12 @@ function AddProduct() {
                                             </h1>
 
                                             <div className="product_content__subjest_info-items">
-                                                <div className="info_item">
-                                                    {detail.key} :
-                                                    <p>{detail.value}</p>
-                                                </div>
+                                                {details.map((el) => (
+                                                    <div className="info_item">
+                                                        {el.key} :
+                                                        <p>{el.value}</p>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
@@ -322,12 +329,6 @@ function AddProduct() {
                                             className=" add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button
-                                            onClick={() => addInfoHandler}
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -356,12 +357,6 @@ function AddProduct() {
                                                 addInfoHandler("type", value)
                                             }
                                         />
-                                        <button
-                                            onClick={() => addInfoHandler}
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -381,12 +376,6 @@ function AddProduct() {
                                             className="add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button
-                                            onClick={() => addInfoHandler}
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -406,17 +395,6 @@ function AddProduct() {
                                             className="add_product_content_inf_inputs-input"
                                             type="number"
                                         />
-                                        <button
-                                            onClick={(e) =>
-                                                addInfoHandler(
-                                                    "price",
-                                                    e.currentTarget.value
-                                                )
-                                            }
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -444,12 +422,6 @@ function AddProduct() {
                                                 addInfoHandler("storage", value)
                                             }
                                         />
-                                        <button
-                                            onClick={() => addInfoHandler}
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -475,12 +447,6 @@ function AddProduct() {
                                                 addInfoHandler("color", value)
                                             }
                                         />
-                                        <button
-                                            onClick={() => addInfoHandler}
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -500,12 +466,6 @@ function AddProduct() {
                                             className="add_product_content_inf_inputs-input"
                                             type="text"
                                         />
-                                        <button
-                                            onClick={() => addInfoHandler}
-                                            className="add_product_content_inf_inputs-button"
-                                        >
-                                            добавить
-                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -513,38 +473,41 @@ function AddProduct() {
                                     <h1 className="add_product_content_inf_inputs_detail-text">
                                         детали
                                     </h1>
-                                    <div className="add_product_content_inf_inputs_detail_adding">
-                                        <input
-                                            value={detail.key}
-                                            onChange={(e) =>
-                                                addInfoHandler(
-                                                    "key",
-                                                    e.target.value
-                                                )
-                                            }
-                                            className="add_product_content_inf_inputs_detail-input"
-                                            type="text"
-                                        />
-                                        <input
-                                            value={detail.value}
-                                            onChange={(e) =>
-                                                addInfoHandler(
-                                                    "value",
-                                                    e.target.value
-                                                )
-                                            }
-                                            className="add_product_content_inf_inputs_detail-input"
-                                            type="text"
-                                        />
-                                        <button className="add_product_content_inf_inputs_detail-button">
-                                            добавить
-                                        </button>
-                                        <button className="add_product_content_inf_inputs_detail-button">
-                                            удалить
-                                        </button>
-                                    </div>
+                                    {details.map(() => (
+                                        <div className="add_product_content_inf_inputs_detail_adding">
+                                            <input
+                                                value={detail.key}
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "key",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="add_product_content_inf_inputs_detail-input"
+                                                type="text"
+                                            />
+                                            <input
+                                                value={detail.value}
+                                                onChange={(e) =>
+                                                    addInfoHandler(
+                                                        "value",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="add_product_content_inf_inputs_detail-input"
+                                                type="text"
+                                            />
 
-                                    <button className="add_product_content_inf_inputs_detail-addKey">
+                                            <button className="add_product_content_inf_inputs_detail-button">
+                                                удалить
+                                            </button>
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        onClick={() => addInputs}
+                                        className="add_product_content_inf_inputs_detail-addKey"
+                                    >
                                         +
                                     </button>
                                 </div>
@@ -566,12 +529,6 @@ function AddProduct() {
                                                 className="add_product_content_inf_inputs-input"
                                                 type="number"
                                             />
-                                            <button
-                                                onClick={() => addInfoHandler}
-                                                className="add_product_content_inf_inputs-button"
-                                            >
-                                                добавить
-                                            </button>
                                         </div>
                                     </div>
                                     <hr />
@@ -591,12 +548,6 @@ function AddProduct() {
                                                 className="add_product_content_inf_inputs-input"
                                                 type="number"
                                             />
-                                            <button
-                                                onClick={() => addInfoHandler}
-                                                className="add_product_content_inf_inputs-button"
-                                            >
-                                                добавить
-                                            </button>
                                         </div>
                                     </div>
                                     <hr />
@@ -616,12 +567,6 @@ function AddProduct() {
                                                 className="add_product_content_inf_inputs-input"
                                                 type="number"
                                             />
-                                            <button
-                                                onClick={() => addInfoHandler}
-                                                className="add_product_content_inf_inputs-button"
-                                            >
-                                                добавить
-                                            </button>
                                         </div>
                                     </div>
                                     <hr />
@@ -641,12 +586,6 @@ function AddProduct() {
                                                 className="add_product_content_inf_inputs-input"
                                                 type="number"
                                             />
-                                            <button
-                                                onClick={() => addInfoHandler}
-                                                className="add_product_content_inf_inputs-button"
-                                            >
-                                                добавить
-                                            </button>
                                         </div>
                                     </div>
                                     <hr />
@@ -666,12 +605,6 @@ function AddProduct() {
                                                 className="add_product_content_inf_inputs-input"
                                                 type="number"
                                             />
-                                            <button
-                                                onClick={() => addInfoHandler}
-                                                className="add_product_content_inf_inputs-button"
-                                            >
-                                                добавить
-                                            </button>
                                         </div>
                                     </div>
                                     <hr />
@@ -681,7 +614,7 @@ function AddProduct() {
                                         </h1>
                                         <div className="add_product_content_inf_inputs_adding">
                                             <input
-                                                value={marks.portabl}
+                                                value={data.portabl}
                                                 onChange={(e) =>
                                                     addInfoHandler(
                                                         "portabl",
@@ -691,12 +624,6 @@ function AddProduct() {
                                                 className="add_product_content_inf_inputs-input"
                                                 type=""
                                             />
-                                            <button
-                                                onClick={() => addInfoHandler}
-                                                className="add_product_content_inf_inputs-button"
-                                            >
-                                                добавить
-                                            </button>
                                         </div>
                                     </div>
                                 </div>

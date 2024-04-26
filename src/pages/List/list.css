@@ -1,7 +1,24 @@
-.List__content{
+.List__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+
+.List_buttons{
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.List-renderButton {
+    width: 150px;
+    padding: 5px 20px;
+    background: rgb(255, 77, 77);
+    border: none;
+    color: white;
+    border-radius: 7px;
 }
 
 @media screen and (max-width: 375px) {
@@ -9,4 +26,3 @@
         grid-template-columns: 1fr;
     }
 }
-

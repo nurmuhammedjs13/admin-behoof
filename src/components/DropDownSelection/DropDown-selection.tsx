@@ -16,7 +16,6 @@ const DropDownColor: React.FC<PropsColor> = ({ onSelect, defaultColor, data }) =
         }, [defaultColor]);
 
     function onSelectHandler(text: string) {
-        // setCurrentColor(text);
         onSelect(text);
         setShowColor(!showColor);
     }
