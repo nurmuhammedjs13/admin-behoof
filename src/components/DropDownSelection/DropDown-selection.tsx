@@ -3,17 +3,17 @@ import React, { useEffect, useState } from "react";
 
 interface PropsColor {
     onSelect: (value: string) => void;
-    defaultColor: string;
+    defaultSelection: string;
     data: string[];
 }
 
-const DropDownColor: React.FC<PropsColor> = ({ onSelect, defaultColor, data }) => {
-    const [currentColor, setCurrentColor] = useState(defaultColor);
+const DropDownColor: React.FC<PropsColor> = ({ onSelect, defaultSelection, data }) => {
+    const [currentSelection, setCurrentSelection] = useState(defaultSelection);
     const [showColor, setShowColor] = useState(true);
 
         useEffect(() => {
-            setCurrentColor(defaultColor);
-        }, [defaultColor]);
+            setCurrentSelection(defaultSelection);
+        }, [defaultSelection]);
 
     function onSelectHandler(text: string) {
         onSelect(text);
@@ -23,16 +23,16 @@ const DropDownColor: React.FC<PropsColor> = ({ onSelect, defaultColor, data }) =
     return (
         <div className="DropDown-wrap">
             <button className="DropDown-wrap-button" onClick={() => setShowColor(!showColor)}>
-                {currentColor}
+                {currentSelection}
             </button>
 
             <div className={showColor ? "dropdown-hidden" : "dropdown-visible"}>
-                {data.map((colorEl) => (
+                {data.map((SelectionEl) => (
                     <button
                         className="data"
-                        onClick={() => onSelectHandler(colorEl)}
+                        onClick={() => onSelectHandler(SelectionEl)}
                     >
-                        {colorEl}
+                        {SelectionEl}
                     </button>
                 ))}
             </div>

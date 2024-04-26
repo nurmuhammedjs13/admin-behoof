@@ -148,9 +148,6 @@ function product_content() {
                     </p>
                 </div>
                 <div className="product_content__content_blocks_buttons">
-                    <button className="product_content__content_blocks_editbutton">
-                        изменить
-                    </button>
                     <button className="product_content__content_blocks_deletebutton">
                         удалить
                     </button>

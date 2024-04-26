@@ -10,11 +10,21 @@ import { getDatabase, set, ref } from "firebase/database";
 function AddProduct() {
     const id = uuidv4();
 
-    const [detail, setDetail] = useState({
+    const [detail, setDetail] = useState<{
+        key: string;
+        value: string;
+        id?: string;
+    }>({
         key: "",
         value: "",
+        id,
     });
-    const [details, setDetails] = useState([]);
+    const [details, setDetails] = useState<{ key: string; value: string }[]>(
+        []
+    );
+
+    const [litteImg, setLitteImg] = useState<{ imgs: string }>({ imgs: "" });
+    const [arrlitteImg, setArrLitteImg] = useState<{ imgs: string }[]>([]);
 
     const [marks] = useState<{
         battery: number;
@@ -64,6 +74,7 @@ function AddProduct() {
         id: "",
         ...marks,
         ...detail,
+        ...litteImg,
     });
 
     function addInfoHandler(key: string, value: string) {
@@ -71,14 +82,14 @@ function AddProduct() {
             ...prevData,
             [key]: value,
         }));
-        setDetail((prevData) => ({
-            ...prevData,
+        setDetail((prevDetail) => ({
+            ...prevDetail,
             [key]: value,
         }));
-    }
-
-    function addInputs() {
-        
+        setLitteImg((prevImg) => ({
+            ...prevImg,
+            [key]: value,
+        }));
     }
 
     function addProductHandler() {
@@ -116,7 +127,18 @@ function AddProduct() {
             date: "",
         }));
     }
+    function addInputs() {
+        setDetails([...details, detail]);
+        setDetail({
+            key: "",
+            value: "",
+        });
+        console.log(details);
+    }
 
+    function addImgHandler() {
+        setArrLitteImg([...arrlitteImg, litteImg]);
+    }
     return (
         <>
             <Header />
@@ -134,17 +156,30 @@ function AddProduct() {
                                                 alt=""
                                             />
                                         </div>
-
+                                        <div className="product_content__img_imgs">
+                                            {arrlitteImg.map((item, index) => (
+                                                <div key={index}>
+                                                    <img
+                                                        className="product_content__img2"
+                                                        src={item.imgs}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                         <div className="product_content__subjest_infos">
                                             <h1 className="info_text">
                                                 {data.model}
                                             </h1>
 
                                             <div className="product_content__subjest_info-items">
-                                                {details.map((el) => (
-                                                    <div className="info_item">
-                                                        {el.key} :
-                                                        <p>{el.value}</p>
+                                                {details.map((item, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="info_item"
+                                                    >
+                                                        {item.key} :{" "}
+                                                        <p>{item.value}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -301,9 +336,6 @@ function AddProduct() {
                                     <p>{data.description}</p>
                                 </div>
                                 <div className="product_content__content_blocks_buttons">
-                                    <button className="product_content__content_blocks_editbutton">
-                                        изменить
-                                    </button>
                                     <button className="product_content__content_blocks_deletebutton">
                                         удалить
                                     </button>
@@ -329,6 +361,26 @@ function AddProduct() {
                                             className=" add_product_content_inf_inputs-input"
                                             type="text"
                                         />
+                                    </div>
+                                    <div className="add_product_content_inf_inputs_adding">
+                                        <input
+                                            value={litteImg.imgs}
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "imgs",
+                                                    e.target.value
+                                                )
+                                            }
+                                            placeholder="URL"
+                                            className=" add_product_content_inf_inputs-input"
+                                            type="text"
+                                        />
+                                        <button
+                                            onClick={addImgHandler}
+                                            className="add_product_content_inf_inputs-button"
+                                        >
+                                            Добавить
+                                        </button>
                                     </div>
                                 </div>
                                 <hr />
@@ -413,7 +465,7 @@ function AddProduct() {
                                                 "512гб",
                                                 "1тб",
                                             ]}
-                                            defaultColor={
+                                            defaultSelection={
                                                 !data.storage
                                                     ? "накопитель"
                                                     : data.storage
@@ -438,7 +490,7 @@ function AddProduct() {
                                                 "красный",
                                                 "фиолетовый",
                                             ]}
-                                            defaultColor={
+                                            defaultSelection={
                                                 !data.color
                                                     ? "цвет"
                                                     : data.color
@@ -473,39 +525,32 @@ function AddProduct() {
                                     <h1 className="add_product_content_inf_inputs_detail-text">
                                         детали
                                     </h1>
-                                    {details.map(() => (
-                                        <div className="add_product_content_inf_inputs_detail_adding">
-                                            <input
-                                                value={detail.key}
-                                                onChange={(e) =>
-                                                    addInfoHandler(
-                                                        "key",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="add_product_content_inf_inputs_detail-input"
-                                                type="text"
-                                            />
-                                            <input
-                                                value={detail.value}
-                                                onChange={(e) =>
-                                                    addInfoHandler(
-                                                        "value",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="add_product_content_inf_inputs_detail-input"
-                                                type="text"
-                                            />
-
-                                            <button className="add_product_content_inf_inputs_detail-button">
-                                                удалить
-                                            </button>
-                                        </div>
-                                    ))}
-
+                                    <div className="add_product_content_inf_inputs_detail_adding">
+                                        <input
+                                            value={detail.key}
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "key",
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="add_product_content_inf_inputs_detail-input"
+                                            type="text"
+                                        />
+                                        <input
+                                            value={detail.value}
+                                            onChange={(e) =>
+                                                addInfoHandler(
+                                                    "value",
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="add_product_content_inf_inputs_detail-input"
+                                            type="text"
+                                        />
+                                    </div>
                                     <button
-                                        onClick={() => addInputs}
+                                        onClick={addInputs}
                                         className="add_product_content_inf_inputs_detail-addKey"
                                     >
                                         +
