@@ -68,6 +68,8 @@ function App() {
         description: "",
         date: "",
         id: "",
+        ...arrlitteImg,
+        ...details,
         ...marks,
         ...detail,
         ...litteImg,

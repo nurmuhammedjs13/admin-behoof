@@ -60,6 +60,8 @@ function AddProduct() {
     function addProductHandler() {
         const newData = {
             ...data,
+            arrlitteImg,
+            details,
             date: new Date().toLocaleDateString("ru-RU", intlOptions),
             id,
         };
