@@ -1,9 +1,12 @@
 import { get, getDatabase, ref, remove } from "firebase/database";
 import Header from "../../components/header/header";
 import "./list.css";
-import { useState } from "react";
+import Context from "../../Context";
+import { Key, useContext, useState } from "react";
 
 function List() {
+    const { details, arrlitteImg } = useContext(Context);
+
     const [productsDB, setProductsDB] = useState([]);
 
     function getproduct() {
@@ -24,7 +27,7 @@ function List() {
             });
     }
 
-    function removeProduct(ob) {
+    function removeProduct(ob: { id: string }) {
         const db = getDatabase();
         const productRef = ref(db, "products/" + ob.id);
         remove(productRef).then(() => {
@@ -34,7 +37,7 @@ function List() {
     function removeAllProducts() {
         const db = getDatabase();
         const productRef = ref(db, "products/");
-        remove(productRef).then()
+        remove(productRef).then();
     }
 
     return (
@@ -68,17 +71,67 @@ function List() {
                                                 alt=""
                                             />
                                         </div>
-
+                                        <div className="product_content__img_imgs">
+                                            {arrlitteImg.map((item, index) => (
+                                                <div key={index}>
+                                                    <img
+                                                        className="product_content__img2"
+                                                        src={item.imgs}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                         <div className="product_content__subjest_infos">
                                             <h1 className="info_text">
                                                 {el.model}
                                             </h1>
 
                                             <div className="product_content__subjest_info-items">
-                                                <div className="info_item">
-                                                    Lorem. :
-                                                    <p>Lorem, ipsum dolor.</p>
-                                                </div>
+                                                {details.map(
+                                                    (
+                                                        item: {
+                                                            key:
+                                                                | string
+                                                                | number
+                                                                | boolean
+                                                                | ReactElement<
+                                                                      any,
+                                                                      | string
+                                                                      | JSXElementConstructor<any>
+                                                                  >
+                                                                | Iterable<ReactNode>
+                                                                | ReactPortal
+                                                                | null
+                                                                | undefined;
+                                                            value:
+                                                                | string
+                                                                | number
+                                                                | boolean
+                                                                | ReactElement<
+                                                                      any,
+                                                                      | string
+                                                                      | JSXElementConstructor<any>
+                                                                  >
+                                                                | Iterable<ReactNode>
+                                                                | ReactPortal
+                                                                | null
+                                                                | undefined;
+                                                        },
+                                                        index:
+                                                            | Key
+                                                            | null
+                                                            | undefined
+                                                    ) => (
+                                                        <div
+                                                            key={index}
+                                                            className="info_item"
+                                                        >
+                                                            {item.key} :{" "}
+                                                            <p>{item.value}</p>
+                                                        </div>
+                                                    )
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -233,9 +286,6 @@ function List() {
                                     <p>{el.description}</p>
                                 </div>
                                 <div className="product_content__content_blocks_buttons">
-                                    <button className="product_content__content_blocks_editbutton">
-                                        изменить
-                                    </button>
                                     <button
                                         onClick={() => removeProduct(el)}
                                         className="product_content__content_blocks_deletebutton"

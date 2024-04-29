@@ -1,46 +1,26 @@
 import DropDownColor from "../../components/DropDownSelection/DropDown-selection";
 import DropDownType from "../../components/DropDown-type/DropDown-type";
 import "./addProduct.css";
-import { v4 as uuidv4 } from "uuid";
 import Header from "../../components/header/header";
-import { useMemo, useState } from "react";
+import { useContext, useMemo } from "react";
 import { DateTimeFormatOptions } from "intl";
 import { getDatabase, set, ref } from "firebase/database";
+import Context from "../../Context";
 
 function AddProduct() {
-    const id = uuidv4();
-
-    const [detail, setDetail] = useState<{
-        key: string;
-        value: string;
-        id?: string;
-    }>({
-        key: "",
-        value: "",
+    const {
+        detail,
+        setDetail,
+        details,
+        setDetails,
+        litteImg,
+        setLitteImg,
+        arrlitteImg,
+        setArrLitteImg,
+        data,
+        setData,
         id,
-    });
-    const [details, setDetails] = useState<{ key: string; value: string }[]>(
-        []
-    );
-
-    const [litteImg, setLitteImg] = useState<{ imgs: string }>({ imgs: "" });
-    const [arrlitteImg, setArrLitteImg] = useState<{ imgs: string }[]>([]);
-
-    const [marks] = useState<{
-        battery: number;
-        display: number;
-        camera: number;
-        answer: number;
-        design: number;
-        portabl: number;
-    }>({
-        battery: 0,
-        display: 0,
-        camera: 0,
-        answer: 0,
-        design: 0,
-        portabl: 0,
-    });
+    } = useContext(Context);
 
     const options = useMemo(
         () => ({
@@ -61,21 +41,6 @@ function AddProduct() {
             } as DateTimeFormatOptions),
         [options]
     );
-
-    const [data, setData] = useState({
-        img: "",
-        type: "",
-        model: "",
-        price: "",
-        storage: "",
-        color: "",
-        description: "",
-        date: "",
-        id: "",
-        ...marks,
-        ...detail,
-        ...litteImg,
-    });
 
     function addInfoHandler(key: string, value: string) {
         setData((prevData) => ({
@@ -126,6 +91,13 @@ function AddProduct() {
             design: 0,
             date: "",
         }));
+        setDetails([]);
+        setDetail({
+            key: "",
+            value: "",
+        });
+        setArrLitteImg([]);
+        setLitteImg({ imgs: "" });
     }
     function addInputs() {
         setDetails([...details, detail]);
@@ -138,7 +110,9 @@ function AddProduct() {
 
     function addImgHandler() {
         setArrLitteImg([...arrlitteImg, litteImg]);
+        setLitteImg({ imgs: "" });
     }
+
     return (
         <>
             <Header />
@@ -307,9 +281,9 @@ function AddProduct() {
                                             </div>
 
                                             <div className="product_content_price_and_img">
-                                                <div className="product_content_price">
+                                                <h1 className="product_content_price">
                                                     {data.price} c{" "}
-                                                </div>
+                                                </h1>
                                             </div>
 
                                             <div className="product_content_price_color">
@@ -332,15 +306,19 @@ function AddProduct() {
                                     </div>
                                 </div>
                                 <div className="product_content__subjest-text">
-                                    <h1>Описание</h1>
-                                    <p>{data.description}</p>
+                                    <h1 className="product_content__subjest-text-title">
+                                        Описание
+                                    </h1>
+                                    <h1 className="product_content__subjest-text-des">
+                                        {data.description}
+                                    </h1>
                                 </div>
                                 <div className="product_content__content_blocks_buttons">
                                     <button className="product_content__content_blocks_deletebutton">
                                         удалить
                                     </button>
                                 </div>
-                            </div>{" "}
+                            </div>
                         </div>
                         <div className="add_product_content_block">
                             <div className="add_product_content_inf">
@@ -527,6 +505,7 @@ function AddProduct() {
                                     </h1>
                                     <div className="add_product_content_inf_inputs_detail_adding">
                                         <input
+                                            placeholder="ключ"
                                             value={detail.key}
                                             onChange={(e) =>
                                                 addInfoHandler(
@@ -538,6 +517,7 @@ function AddProduct() {
                                             type="text"
                                         />
                                         <input
+                                            placeholder="значение"
                                             value={detail.value}
                                             onChange={(e) =>
                                                 addInfoHandler(
