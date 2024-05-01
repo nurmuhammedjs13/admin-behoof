@@ -2,25 +2,85 @@ import DropDownColor from "../../components/DropDownSelection/DropDown-selection
 import DropDownType from "../../components/DropDown-type/DropDown-type";
 import "./addProduct.css";
 import Header from "../../components/header/header";
-import { useContext, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { DateTimeFormatOptions } from "intl";
 import { getDatabase, set, ref } from "firebase/database";
-import Context from "../../Context";
+import { v4 as uuidv4 } from "uuid";
 
 function AddProduct() {
-    const {
-        detail,
-        setDetail,
-        details,
-        setDetails,
-        litteImg,
-        setLitteImg,
-        arrlitteImg,
-        setArrLitteImg,
-        data,
-        setData,
-        id,
-    } = useContext(Context);
+    const id = uuidv4();
+
+    // const [detail, setDetail] = useState<{
+    //     key: string;
+    //     value: string;
+    //     id?: string;
+    // }>({
+    //     key: "",
+    //     value: "",
+    //     id,
+    // });
+    // const [details, setDetails] = useState<{ key: string; value: string }[]>(
+    //     []
+    // );
+
+    // const [littleImg, setLittleImg] = useState<{ imgs: string }>({ imgs: "" });
+    // const [arrLittleImg, setArrLittleImg] = useState<{ imgs: string }[]>([]);
+
+    // const [marks] = useState<{
+    //     battery: number;
+    //     display: number;
+    //     camera: number;
+    //     answer: number;
+    //     design: number;
+    //     portabl: number;
+    // }>({
+    //     battery: 0,
+    //     display: 0,
+    //     camera: 0,
+    //     answer: 0,
+    //     design: 0,
+    //     portabl: 0,
+    // });
+
+    const [data, setData] = useState<{
+        img: string;
+        type: string;
+        model: string;
+        price: number;
+        storage: string;
+        color: string;
+        description: string;
+        date: string;
+        id: string;
+        battery: number;
+        display: number;
+        camera: number;
+        answer: number;
+        design: number;
+        portabl: number;
+        littleImg: string;
+        arrLittleImg: { imgs: string }[];
+        details: { key: string; value: string }[];
+    }>({
+        img: "",
+        type: "",
+        model: "",
+        price: 0,
+        storage: "",
+        color: "",
+        description: "",
+        date: "",
+        id: "",
+        battery: 0,
+        display: 0,
+        camera: 0,
+        answer: 0,
+        design: 0,
+        portabl: 0,
+        littleImg: "",
+        arrLittleImg: [{ imgs: "" }],
+        details: [{ key: "", value: "" }],
+    });
 
     const options = useMemo(
         () => ({
@@ -42,26 +102,17 @@ function AddProduct() {
         [options]
     );
 
-    function addInfoHandler(key: string, value: string) {
-        setData((prevData) => ({
-            ...prevData,
-            [key]: value,
-        }));
-        setDetail((prevDetail) => ({
-            ...prevDetail,
-            [key]: value,
-        }));
-        setLitteImg((prevImg) => ({
-            ...prevImg,
-            [key]: value,
-        }));
-    }
+function addInfoHandler(key: string, value: string) {
+    setData((prevData) => ({
+        ...prevData,
+        arrLittleImg: [...prevData.arrLittleImg, { imgs:value }],
+        [key]: value,
+        details: [...prevData.details, { key, value }],
+    }));
 
     function addProductHandler() {
         const newData = {
             ...data,
-            arrlitteImg,
-            details,
             date: new Date().toLocaleDateString("ru-RU", intlOptions),
             id,
         };
@@ -81,38 +132,28 @@ function AddProduct() {
             img: "",
             type: "",
             model: "",
-            price: "",
+            price: 0,
             storage: "",
             color: "",
             description: "",
+            date: "",
             battery: 0,
             display: 0,
-            answer: 0,
-            portabl: 0,
             camera: 0,
+            answer: 0,
             design: 0,
-            date: "",
+            portabl: 0,
+            littleImg: "",
+            arrLittleImg: [],
+            details: [],
         }));
-        setDetails([]);
-        setDetail({
-            key: "",
-            value: "",
-        });
-        setArrLitteImg([]);
-        setLitteImg({ imgs: "" });
     }
-    function addInputs() {
-        setDetails([...details, detail]);
-        setDetail({
-            key: "",
-            value: "",
-        });
-        console.log(details);
+    function addInputs(newData: any) {
+        setData([...data, newData]);
     }
 
     function addImgHandler() {
-        setArrLitteImg([...arrlitteImg, litteImg]);
-        setLitteImg({ imgs: "" });
+        setData([...data, littleImg]);
     }
 
     return (
@@ -133,15 +174,17 @@ function AddProduct() {
                                             />
                                         </div>
                                         <div className="product_content__img_imgs">
-                                            {arrlitteImg.map((item, index) => (
-                                                <div key={index}>
-                                                    <img
-                                                        className="product_content__img2"
-                                                        src={item.imgs}
-                                                        alt=""
-                                                    />
-                                                </div>
-                                            ))}
+                                            {data.arrLittleImg.map(
+                                                (item, index) => (
+                                                    <div key={index}>
+                                                        <img
+                                                            className="product_content__img2"
+                                                            src={item.imgs}
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                )
+                                            )}
                                         </div>
                                         <div className="product_content__subjest_infos">
                                             <h1 className="info_text">
@@ -149,15 +192,17 @@ function AddProduct() {
                                             </h1>
 
                                             <div className="product_content__subjest_info-items">
-                                                {details.map((item, index) => (
-                                                    <div
-                                                        key={index}
-                                                        className="info_item"
-                                                    >
-                                                        {item.key} :{" "}
-                                                        <p>{item.value}</p>
-                                                    </div>
-                                                ))}
+                                                {data.details.map(
+                                                    (item, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="info_item"
+                                                        >
+                                                            {item.key} :{" "}
+                                                            <p>{item.value}</p>
+                                                        </div>
+                                                    )
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -344,7 +389,7 @@ function AddProduct() {
                                     </div>
                                     <div className="add_product_content_inf_inputs_adding">
                                         <input
-                                            value={litteImg.imgs}
+                                            value={data.littleImg}
                                             onChange={(e) =>
                                                 addInfoHandler(
                                                     "imgs",
@@ -508,7 +553,7 @@ function AddProduct() {
                                     <div className="add_product_content_inf_inputs_detail_adding">
                                         <input
                                             placeholder="ключ"
-                                            value={detail.key}
+                                            value={[data.details.key]}
                                             onChange={(e) =>
                                                 addInfoHandler(
                                                     "key",
@@ -520,7 +565,7 @@ function AddProduct() {
                                         />
                                         <input
                                             placeholder="значение"
-                                            value={detail.value}
+                                            value={data.details,value}
                                             onChange={(e) =>
                                                 addInfoHandler(
                                                     "value",
@@ -706,7 +751,7 @@ function AddProduct() {
                                     </h1>
                                     <h1
                                         className={
-                                            data.price === ""
+                                            data.price === 0
                                                 ? "add_product_content_check_content-text"
                                                 : "add_product_content_check_content-text-true"
                                         }
