@@ -78,8 +78,8 @@ function AddProduct() {
         design: 0,
         portabl: 0,
         littleImg: "",
-        arrLittleImg: [{ imgs: "" }],
-        details: [{ key: "", value: "" }],
+        arrLittleImg: [],
+        details: [],
     });
 
     const options = useMemo(
@@ -102,13 +102,12 @@ function AddProduct() {
         [options]
     );
 
-function addInfoHandler(key: string, value: string) {
-    setData((prevData) => ({
-        ...prevData,
-        arrLittleImg: [...prevData.arrLittleImg, { imgs:value }],
-        [key]: value,
-        details: [...prevData.details, { key, value }],
-    }));
+    function addInfoHandler(key: string, value: string) {
+        setData((prevData) => ({
+            ...prevData,
+            [key]: value,
+        }));
+    }
 
     function addProductHandler() {
         const newData = {
@@ -148,12 +147,12 @@ function addInfoHandler(key: string, value: string) {
             details: [],
         }));
     }
-    function addInputs(newData: any) {
-        setData([...data, newData]);
+    function addInputs(newInput: any) {
+        setData({ ...data, newInput });
     }
 
-    function addImgHandler() {
-        setData([...data, littleImg]);
+    function addImgHandler(littleImg: any) {
+        setData({ ...data, littleImg });
     }
 
     return (
@@ -565,7 +564,7 @@ function addInfoHandler(key: string, value: string) {
                                         />
                                         <input
                                             placeholder="значение"
-                                            value={data.details,value}
+                                            value={data.details.value}
                                             onChange={(e) =>
                                                 addInfoHandler(
                                                     "value",

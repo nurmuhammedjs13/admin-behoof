@@ -3,7 +3,6 @@ import Home from "./pages/home/home";
 import AddProduct from "./pages/addProduct/addProduct";
 import "./index.css";
 import List from "./pages/List/list";
-import Context from "./Context";
 
 const router = createBrowserRouter([
     {
@@ -22,9 +21,9 @@ const router = createBrowserRouter([
 
 function App() {
     return (
-        <Context.Provider value={{}}>
+        <>
             <RouterProvider router={router} />
-        </Context.Provider>
+        </>
     );
 }
 
